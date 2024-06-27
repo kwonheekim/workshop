@@ -3,6 +3,9 @@ import { Space, Table, Tag } from "antd";
 import styled from "styled-components";
 
 const App = () => {
+  // 게임 종류
+  const [gameType1, setGameType1] = useState(1);
+
   // 간주 가요
   const [regard10, setRegard10] = useState(false);
   const [regard20, setRegard20] = useState(false);
@@ -37,6 +40,12 @@ const App = () => {
   const [overseasMovie30, setOverseasMovie30] = useState(false);
   const [overseasMovie40, setOverseasMovie40] = useState(false);
   const [overseasMovie50, setOverseasMovie50] = useState(false);
+
+  // randombox
+  const [randomBox1, setRandomBox1] = useState(false);
+  const [randomBox2, setRandomBox2] = useState(false);
+  const [randomBox3, setRandomBox3] = useState(false);
+  const [randomBox4, setRandomBox4] = useState(false);
 
   const columns = [
     {
@@ -450,7 +459,63 @@ const App = () => {
     },
   ];
 
-  return <Table columns={columns} dataSource={data} />;
+  return (
+    <>
+      {gameType1 === 1 ? (
+        <>
+          <GameBox>
+            <Sec>
+              <RandomBox border={"lefttop"}>
+                {randomBox1 ? (
+                  <MineGameText color={"red"}>현미 옮기기 </MineGameText>
+                ) : (
+                  <MineGameBox
+                    bgcolor={"red"}
+                    onClick={() => setRandomBox1(!randomBox1)}
+                  />
+                )}
+              </RandomBox>
+              <RandomBox border={"righttop"}>
+                {randomBox2 ? (
+                  <MineGameText color={"blue"}>공포의 쿵쿵따</MineGameText>
+                ) : (
+                  <MineGameBox
+                    bgcolor={"blue"}
+                    onClick={() => setRandomBox2(!randomBox2)}
+                  />
+                )}
+              </RandomBox>
+            </Sec>
+            <Sec>
+              <RandomBox border={"leftbottom"}>
+                {randomBox3 ? (
+                  <MineGameText color={"green"}>병뚜껑 날리기</MineGameText>
+                ) : (
+                  <MineGameBox
+                    bgcolor={"green"}
+                    onClick={() => setRandomBox3(!randomBox3)}
+                  />
+                )}
+              </RandomBox>
+              <RandomBox border={"rightbottom"}>
+                {randomBox4 ? (
+                  <MineGameText color={"orange"}>카리나 게임</MineGameText>
+                ) : (
+                  <MineGameBox
+                    bgcolor={"orange"}
+                    onClick={() => setRandomBox4(!randomBox4)}
+                  />
+                )}
+              </RandomBox>
+            </Sec>
+          </GameBox>
+          <div onClick={() => setGameType1(2)}>Next</div>
+        </>
+      ) : (
+        <Table columns={columns} dataSource={data} />
+      )}
+    </>
+  );
 };
 
 const CategoryTitle = styled.div`
@@ -538,7 +603,7 @@ const Counter = styled.div`
   text-align: center;
   font-size: 20px;
   font-weight: 700;
-  color: pink;
+  color: orchid;
 `;
 
 const AnimationBox = styled.div`
@@ -589,6 +654,84 @@ const OverseasMovieText = styled.div`
   color: brown;
 `;
 
-// overseasMovie
+const GameBox = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Sec = styled.div`
+  display: flex;
+`;
+
+const RandomBox = styled.div`
+  padding: 50px;
+
+  /* left top */
+  ${(props) => {
+    if (props.border === "lefttop") {
+      return `
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    `;
+    }
+  }}
+
+  /* right top */
+  ${(props) => {
+    if (props.border === "righttop") {
+      return `
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    `;
+    }
+  }}
+
+  /* left bottom */
+  ${(props) => {
+    if (props.border === "leftbottom") {
+      return `
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    `;
+    }
+  }}
+
+  /* right bottom */
+  ${(props) => {
+    if (props.border === "rightbottom") {
+      return `
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    `;
+    }
+  }}
+`;
+
+const MineGameBox = styled.div`
+  width: 300px;
+  height: 300px;
+  background-color: ${(props) => props.bgcolor};
+  transition: 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
+const MineGameText = styled.div`
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: 700;
+  color: ${(props) => props.color};
+`;
 
 export default App;
